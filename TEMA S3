@@ -1,0 +1,75 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class Carte {
+private:
+    const int id;
+    string titlu;
+    string autor;
+    float pret;
+    int nrCapitole;
+    int* paginiCapitole;
+    static int nrCarti;
+
+public:
+  
+    Carte() : id(++nrCarti) {
+        titlu = "Carte necunoscuta";
+        autor = "Autor necunoscut";
+        pret = 0.0f;
+        nrCapitole = 0;
+        paginiCapitole = nullptr;
+    }
+
+    
+    Carte(string titlu, string autor, float pret, int nrCapitole, int* pagini) : id(++nrCarti) {
+        this->titlu = titlu;
+        this->autor = autor;
+        this->pret = pret;
+        this->nrCapitole = nrCapitole;
+        this->paginiCapitole = new int[nrCapitole];
+        for (int i = 0; i < nrCapitole; i++) {
+            this->paginiCapitole[i] = pagini[i];
+        }
+    }
+
+    
+    ~Carte() {
+        delete[] paginiCapitole;
+    }
+
+    
+    void afisareCarte() {
+        cout << "\nCarte [" << id << "] - \"" << titlu << "\" de " << autor;
+        cout << "\nPret: " << pret << " lei";
+        cout << "\nNumar capitole: " << nrCapitole;
+        if (paginiCapitole != nullptr && nrCapitole > 0) {
+            cout << "\nPagini per capitol: ";
+            for (int i = 0; i < nrCapitole; i++) {
+                cout << paginiCapitole[i];
+                if (i < nrCapitole - 1) cout << ", ";
+            }
+        }
+        cout << "\n";
+    }
+};
+
+
+int Carte::nrCarti = 0;
+
+
+int main() {
+    
+    Carte carte1;
+    carte1.afisareCarte();
+
+    
+    int* pagini = new int[3]{25, 30, 45};
+    Carte carte2("Programare C++", "Ion Popescu", 49.99f, 3, pagini);
+    carte2.afisareCarte();
+
+    return 0;
+}
