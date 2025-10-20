@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+
+void afisareVector(float* vector, int dimensiune);
+
+float calculeazaMedia(float* vector, int dimensiune) {
+    float suma = 0;
+    for (int i = 0; i < dimensiune; i++) {
+        suma += vector[i];
+    }
+    return suma / dimensiune;
+}
+
+int pozitieElementCelMaiApropiatDeMedia(float* vector, int dimensiune, float media) {
+    int pozitie = 0;
+    float diferentaMinima = fabs(vector[0] - media);
+
+    for (int i = 1; i < dimensiune; i++) {
+        float diferenta = fabs(vector[i] - media);
+        if (diferenta < diferentaMinima) {
+            diferentaMinima = diferenta;
+            pozitie = i;
+        }
+    }
+    return pozitie;
+}
+
+void stergereElement(float** vector, int* dimensiune, int pozitie) {
+    float* copie = new float[*dimensiune - 1];
+    int j = 0;
+    for (int i = 0; i < *dimensiune; i++) {
+        if (i != pozitie) {
+            copie[j++] = (*vector)[i];
+        }
+    }
+    delete[] *vector;
+    *vector = copie;
+    (*dimensiune)--;
+}
+
+int main() {
+    int dimensiune = 5;
+    float* vector = new float[dimensiune];
+
+    for (int i = 0; i < dimensiune; i++) {
+        cout << "Vector[" << i << "] = ";
+        cin >> vector[i];
+    }
+
+    cout << "\nVectorul initial:";
+    afisareVector(vector, dimensiune);
+
+    float media = calculeazaMedia(vector, dimensiune);
+    cout << "\n\nMedia valorilor este: " << media;
+
+    int pozitie = pozitieElementCelMaiApropiatDeMedia(vector, dimensiune, media);
+    cout << "\nPozitia elementului cel mai apropiat de media: " << pozitie;
+
+    stergereElement(&vector, &dimensiune, pozitie);
+
+    cout << "\n\nVectorul dupa stergere:";
+    afisareVector(vector, dimensiune);
+
+    delete[] vector;
+    return 0;
+}
+
+void afisareVector(float* vector, int dimensiune) {
+    for (int i = 0; i < dimensiune; i++) {
+        cout << "\nVector[" << i << "] = " << vector[i];
+    }
+}
