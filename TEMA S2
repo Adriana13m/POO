@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+void afisareVector(int* vector, int dimensiune);
+
+int pozitieMaximInVector(int* vector, int dimensiune) {
+    int pozitieMax = 0;
+    for (int i = 1; i < dimensiune; i++) {
+        if (vector[pozitieMax] < vector[i]) {
+            pozitieMax = i;
+        }
+    }
+    return pozitieMax;
+}
+
+
+void stergePozitie(int *&v, int &n, int poz) {
+    if (n <= 0) return;
+    if (poz < 0 || poz >= n) return;
+
+    int *vNou = new int[n - 1];
+    int j = 0;
+    for (int i = 0; i < n; i++) {
+        if (i == poz) continue;
+        vNou[j++] = v[i];
+    }
+
+    delete[] v;
+    v = vNou;
+    n--;
+}
+
+void afisareVector(int* vector, int dimensiune) {
+    for (int i = 0; i < dimensiune; i++) {
+        cout << endl << "Vector[" << i << "] = " << vector[i];
+    }
+}
+
+int main() {
+    int* vector;
+    int dimensiune = 5;
+
+    vector = new int[dimensiune];
+    for (int i = 0; i < dimensiune; i++) {
+        cout << "Vector[" << i << "] = ";
+        cin >> vector[i];
+    }
+
+    cout << "\nValorile din vector sunt:";
+    afisareVector(vector, dimensiune);
+
+    cout << "\nPozitia pe care se afla maximul este: " 
+         << pozitieMaximInVector(vector, dimensiune);
+
+    stergePozitie(vector, dimensiune, 3); 
+
+    cout << "\nVector dupa stergere:";
+    afisareVector(vector, dimensiune);
+
+    delete[] vector;
+    return 0;
+}
