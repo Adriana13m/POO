@@ -100,8 +100,7 @@ public:
 
 int Carte::nrCarti = 0;
 
-
-int main() {
+void main() {
     Carte carte1;
     carte1.afisareCarte();
 
@@ -128,5 +127,5 @@ int main() {
     delete[] paginiActuale;
     delete carte2;
 
-    return 0;
+    
 }
