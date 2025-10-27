@@ -127,5 +127,5 @@ void main() {
     delete[] greutatiActuale;
     delete m2;
 
-    return 0;
+    
 }
